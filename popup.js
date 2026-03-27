@@ -259,17 +259,17 @@ async function generatePDF(gradDate) {
     const helvetica     = await pdfDoc.embedFont(StandardFonts.Helvetica);
     const helveticaBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
-    const { detectedConcentration, studentName, studentUID } = lastScrapedData;
+    const { detectedConcentration, studentName, studentUID, auditData } = lastScrapedData;
     const selectedYear = document.getElementById('yearDropdown').value;
 
     // ── Resolve concentration key and rules ──────────────────────────────────
     const yearData = requirementDB["Computer Science"][selectedYear];
-    const normalize = str => str.toLowerCase().replace(/&/g, 'and').replace(/\s+/g, ' ').trim();
-    const normalizedDetected = normalize(detectedConcentration);
+    const normalizeText = (str) => (str || "").toLowerCase().replace(/&/g, 'and').replace(/\s+/g, ' ').trim();
+    const normalizedDetected = normalizeText(detectedConcentration);
     const concentrationKeys = Object.keys(yearData).filter(k => k !== 'metadata');
-    const concentrationKey = concentrationKeys.find(k => normalize(k) === normalizedDetected)
+    const concentrationKey = concentrationKeys.find(k => normalizeText(k) === normalizedDetected)
       || concentrationKeys.find(k =>
-          normalize(k).includes(normalizedDetected) || normalizedDetected.includes(normalize(k))
+          normalizeText(k).includes(normalizedDetected) || normalizedDetected.includes(normalizeText(k))
         )
       || concentrationKeys[0];
 
@@ -278,12 +278,69 @@ async function generatePDF(gradDate) {
     const masterCourseList = lastScrapedData.masterCourseList;
 
     // ── Build remaining CS-only course list ──────────────────────────────────
-    // Only includes courses defined in the concentration's requirements.
-    // Skips elective placeholders (codes ending in "+").
-    // Skips courses that are in progress (grade includes "IP").
+    // For fixed requirements, list explicit missing courses.
+    // For flexible buckets (Area/Group/CSC electives), use Workday remaining
+    // counts and add placeholder rows instead of listing every possible option.
     const remainingCourses = []; // { code, hours, requiresC }
 
+    const parseRemainingUnits = (remainingText = "") => {
+      const amount = Number((remainingText.match(/\d+/) || [0])[0]) || 0;
+      const isCredits = remainingText.toLowerCase().includes("credit");
+      if (amount <= 0) return 0;
+      return isCredits ? Math.ceil(amount / 3) : amount;
+    };
+
+    const isFlexibleRequirement = (req) => {
+      const category = normalizeText(req.category);
+      if (category.includes("elective") || category.includes("group")) return true;
+
+      return req.courses.some((courseObj) => {
+        const code = typeof courseObj === "object" ? courseObj.code : courseObj;
+        return code.endsWith("+") || code.startsWith("GROUP_");
+      });
+    };
+
+    const findAuditItemForRequirement = (reqCategory) => {
+      if (!Array.isArray(auditData)) return null;
+
+      const reqNorm = normalizeText(reqCategory);
+      const aliases = [reqNorm];
+
+      if (reqNorm.includes("csc elective")) aliases.push("additional csc elective");
+      if (reqNorm.includes("area elective")) aliases.push("area elective");
+      if (reqNorm.includes("group a or group b")) aliases.push("group a or b");
+
+      return auditData.find((item) => {
+        const nameNorm = normalizeText(item.name);
+        return aliases.some((alias) => nameNorm.includes(alias));
+      }) || null;
+    };
+
+    const toPlaceholderCode = (reqCategory) => {
+      const category = reqCategory.toUpperCase();
+      if (category.includes("AREA ELECTIVE")) return `${getConcentrationAbbr(detectedConcentration)} AREA ELECTIVE`;
+      if (category.includes("CSC ELECTIVE")) return "CSC ELECTIVE";
+      if (category.includes("GROUP A OR GROUP B")) return "GROUP A/B ELECTIVE";
+      if (category.includes("GROUP A")) return "GROUP A ELECTIVE";
+      return reqCategory.toUpperCase();
+    };
+
     activeRules.requirements.forEach(req => {
+      if (isFlexibleRequirement(req)) {
+        const auditItem = findAuditItemForRequirement(req.category);
+        const slots = parseRemainingUnits(auditItem?.remainingText || "");
+
+        for (let i = 0; i < slots; i++) {
+          remainingCourses.push({
+            code: toPlaceholderCode(req.category),
+            hours: 3,
+            requiresC: false,
+            isPlaceholder: true,
+          });
+        }
+        return;
+      }
+
       req.courses.forEach(courseObj => {
         const baseCode  = typeof courseObj === 'object' ? courseObj.code       : courseObj;
         const minGrade  = typeof courseObj === 'object' ? (courseObj.min_grade || null) : null;
@@ -307,14 +364,14 @@ async function generatePDF(gradDate) {
           }
         }
 
-        if (isRemaining && !remainingCourses.find(c => c.code === baseCode)) {
+        if (isRemaining && !remainingCourses.find(c => c.code === baseCode && !c.isPlaceholder)) {
           remainingCourses.push({ code: baseCode, hours: creditHrs, requiresC: minGrade === "C" });
         }
       });
     });
 
-    const totalHours = remainingCourses.reduce((sum, c) => sum + (c.hours || 3), 0);
     const concentrationAbbr = getConcentrationAbbr(detectedConcentration);
+    const totalHours = remainingCourses.reduce((sum, c) => sum + (c.hours || 3), 0);
     const PAGE_H = 792;
     const BLACK  = rgb(0, 0, 0);
     const FS     = 10; // standard font size
@@ -375,7 +432,7 @@ async function generatePDF(gradDate) {
 
     const page2 = pdfDoc.getPages()[1];
 
-    const ROW_START_Y = 646;
+    const ROW_START_Y = 630;
     const ROW_SPACING = 14.5;
     const MAX_ROWS    = 14;
 
@@ -418,7 +475,7 @@ async function generatePDF(gradDate) {
     link.download = `${safeName} Senior Checkout.pdf`;
     link.click();
 
-    statusMsg.innerText = "✓ PDF Generated!";
+    statusMsg.innerText = "PDF Generated!";
     statusMsg.style.color = "#28a745";
 
   } catch (err) {
