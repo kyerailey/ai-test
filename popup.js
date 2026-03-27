@@ -106,9 +106,9 @@ document.getElementById('scrapeBtn').addEventListener('click', async () => {
               ["IP", "CR", "P", "PASS", "IN PROGRESS"].some(s => cellText.includes(s));
           });
 
-          if (gradeMatch) {
-            masterCourseList.push({ code, grade: gradeMatch.toUpperCase() });
-          }
+          // FIX: Always push the course. If no grade is detected, default to "IP"
+          // so that in-progress courses aren't mistakenly treated as not taken.
+          masterCourseList.push({ code, grade: gradeMatch ? gradeMatch.toUpperCase() : "IP" });
         }
       });
 
@@ -280,6 +280,7 @@ async function generatePDF(gradDate) {
     // ── Build remaining CS-only course list ──────────────────────────────────
     // Only includes courses defined in the concentration's requirements.
     // Skips elective placeholders (codes ending in "+").
+    // Skips courses that are in progress (grade includes "IP").
     const remainingCourses = []; // { code, hours, requiresC }
 
     activeRules.requirements.forEach(req => {
@@ -296,7 +297,10 @@ async function generatePDF(gradDate) {
         let isRemaining = false;
         if (!taken) {
           isRemaining = true;
-        } else if (minGrade === "C" && !taken.grade.includes("IP")) {
+        } else if (taken.grade.includes("IP")) {
+          // Course is in progress — do not list as remaining
+          isRemaining = false;
+        } else if (minGrade === "C") {
           // Retake needed if grade is below C-
           if (["F", "D+", "D", "D-"].some(dg => taken.grade.startsWith(dg))) {
             isRemaining = true;
@@ -411,7 +415,7 @@ async function generatePDF(gradDate) {
     const safeName = (studentName || "Student")
       .replace(/[^a-zA-Z0-9 _-]/g, '')
       .replace(/\s+/g, '_');
-    link.download = `Senior_Checkout_${safeName}_${concentrationAbbr}.pdf`;
+    link.download = `${safeName} Senior Checkout.pdf`;
     link.click();
 
     statusMsg.innerText = "✓ PDF Generated!";
