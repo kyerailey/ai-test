@@ -28,8 +28,8 @@ async function initializePopup() {
 }
 
 document.getElementById('yearDropdown').addEventListener('change', (e) => {
-    document.getElementById('scrapeBtn').disabled = (e.target.value === "");
-    document.getElementById('statusMessage').innerText = "Step 2: Click 'Analyze Audit'";
+  document.getElementById('scrapeBtn').disabled = (e.target.value === "");
+  document.getElementById('statusMessage').innerText = "Step 2: Click 'Analyze Audit'";
 });
 
 document.getElementById('resizeToggle').addEventListener('click', () => {
@@ -46,11 +46,33 @@ document.getElementById('scrapeBtn').addEventListener('click', async () => {
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
     func: () => {
+      // --- Detect concentration ---
       const legend = document.querySelector('[data-automation-id="fieldSetLegendLabel"]');
       const legendText = legend ? legend.innerText : "";
       const concentrationMatch = legendText.match(/concentration in (.*?) - BS/);
       const detectedConcentration = concentrationMatch ? concentrationMatch[1] : "General";
 
+      // --- Scrape student name and UID from Workday profile button ---
+      let studentName = "";
+      let studentUID = "";
+
+      const profileBtn = document.querySelector('[data-automation-id="Current_User"]');
+      if (profileBtn) {
+      const ariaLabel = profileBtn.getAttribute('aria-label') || "";
+      const match = ariaLabel.match(/^Profile\s+(.+?)\s+\((\d+)\)$/);
+      if (match) {
+        studentName = match[1];
+        studentUID  = match[2];
+  }
+}
+
+      // --- Scrape expected grad date ---
+      let gradDate = "";
+      const bodyText = document.body.innerText;
+      const gradMatch = bodyText.match(/(?:anticipated|expected|graduation)[^0-9]*([0-1][0-9]\/[0-9]{4})/i);
+      if (gradMatch) gradDate = gradMatch[1];
+
+      // --- Scrape audit rows ---
       const rows = document.querySelectorAll('tr, [role="row"]');
       let auditData = [];
       let masterCourseList = [];
@@ -61,7 +83,7 @@ document.getElementById('scrapeBtn').addEventListener('click', async () => {
 
         const rowText = row.innerText.toUpperCase();
 
-        // 1. Capture Headers (Excluding GPA rows as requested)
+        // Capture section headers
         if ((rowText.includes("LSUAM") || rowText.includes("MAJOR GPA")) && !rowText.includes("GPA")) {
           auditData.push({
             name: cells[0],
@@ -71,19 +93,17 @@ document.getElementById('scrapeBtn').addEventListener('click', async () => {
           });
         }
 
-        // 2. Identify Course Rows
+        // Identify course rows
         const courseMatchIndex = cells.findIndex(c => /^[A-Z]{2,4}\s*\d{4}/.test(c.toUpperCase()));
-        
         if (courseMatchIndex !== -1) {
           const rawCode = cells[courseMatchIndex].match(/^[A-Z]{2,4}\s*\d{4}/)[0];
-          const code = rawCode.replace(/^([A-Z]+)(\d+)/, '$1 $2'); // Ensure space for JSON matching
-          
-          // Use findLast to prioritize manual injections/edits over hidden Workday data
+          const code = rawCode.replace(/^([A-Z]+)(\d+)/, '$1 $2');
+
           const gradeMatch = cells.findLast((c, i) => {
             if (i === courseMatchIndex) return false;
             const cellText = c.toUpperCase().trim();
-            return /^[A-DF][+-]?(\s?\(.*\))?$/.test(cellText) || 
-                   ["IP", "CR", "P", "PASS", "IN PROGRESS"].some(s => cellText.includes(s));
+            return /^[A-DF][+-]?(\s?\(.*\))?$/.test(cellText) ||
+              ["IP", "CR", "P", "PASS", "IN PROGRESS"].some(s => cellText.includes(s));
           });
 
           if (gradeMatch) {
@@ -92,23 +112,25 @@ document.getElementById('scrapeBtn').addEventListener('click', async () => {
         }
       });
 
-      return { auditData, masterCourseList, detectedConcentration };
+      return { auditData, masterCourseList, detectedConcentration, studentName, studentUID, gradDate };
     }
   }, (injectionResults) => {
     if (!injectionResults || !injectionResults[0].result) return;
 
-    const { auditData, masterCourseList, detectedConcentration } = injectionResults[0].result;
-    
-    // KYE UPDATE: Saving data to the pdf and having the export button to pdf
-    lastScrapedData = { auditData, masterCourseList, detectedConcentration };
+    const { auditData, masterCourseList, detectedConcentration, studentName, studentUID, gradDate } =
+      injectionResults[0].result;
+
+    // FIXED: use consistent variable name
+    lastScrapedData = { auditData, masterCourseList, detectedConcentration, studentName, studentUID, gradDate };
     document.getElementById('pdfBtn').disabled = false;
-    
+
     const statusMsg = document.getElementById('statusMessage');
-    statusMsg.innerText = `Detected: ${detectedConcentration}`;
+    const nameDisplay = studentName ? ` | ${studentName}` : '';
+    statusMsg.innerText = `Detected: ${detectedConcentration}${nameDisplay}`;
     statusMsg.style.color = "#28a745";
     statusMsg.style.fontWeight = "bold";
 
-    const yearData = requirementDB["Computer Science"][selectedYear];
+    const yearData = requirementDB["Computer Science"][document.getElementById('yearDropdown').value];
     const normalize = str => str.toLowerCase().replace(/&/g, 'and').replace(/\s+/g, ' ').trim();
     const normalizedDetected = normalize(detectedConcentration);
     const concentrationKeys = Object.keys(yearData).filter(k => k !== 'metadata');
@@ -121,7 +143,6 @@ document.getElementById('scrapeBtn').addEventListener('click', async () => {
       statusMsg.style.color = "#d9534f";
       return;
     }
-    console.log(`[SCS] Detected: "${detectedConcentration}" → Matched to: "${concentrationKey}"`);
 
     const activeRules = yearData[concentrationKey];
     const alternatives = yearData.metadata.alternative_classes;
@@ -172,8 +193,9 @@ document.getElementById('scrapeBtn').addEventListener('click', async () => {
         });
       }
 
-      const statusColor = (item.status.toLowerCase().includes("satisfied") && !item.status.toLowerCase().includes("not")) ? "#5cb85c" :
-                          (item.status.toLowerCase().includes("in progress") ? "#f0ad4e" : "#d9534f");
+      const statusColor = (item.status.toLowerCase().includes("satisfied") && !item.status.toLowerCase().includes("not"))
+        ? "#5cb85c"
+        : (item.status.toLowerCase().includes("in progress") ? "#f0ad4e" : "#d9534f");
 
       const section = document.createElement('div');
       section.style.cssText = `margin-bottom: 12px; padding: 12px; border-left: 6px solid ${statusColor}; background: white; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);`;
@@ -199,60 +221,227 @@ document.getElementById('scrapeBtn').addEventListener('click', async () => {
       items.forEach(renderItem);
     };
 
-    const csItems = sortedAuditData.filter(item => item.name.toLowerCase().includes(detectedConcentration.toLowerCase()) || item.name.toLowerCase().includes('elective'));
-    const genEdItems = sortedAuditData.filter(item => !item.name.toLowerCase().includes(detectedConcentration.toLowerCase()) && !item.name.toLowerCase().includes('elective'));
+    const csItems = sortedAuditData.filter(item =>
+      item.name.toLowerCase().includes(detectedConcentration.toLowerCase()) ||
+      item.name.toLowerCase().includes('elective')
+    );
+    const genEdItems = sortedAuditData.filter(item =>
+      !item.name.toLowerCase().includes(detectedConcentration.toLowerCase()) &&
+      !item.name.toLowerCase().includes('elective')
+    );
 
     renderSection(csItems, "Computer Science Classes");
     renderSection(genEdItems, "General Elective Classes");
   });
 });
 
-//KYE UPDATED IMPLEMENTATION: GENERATING PDF FROM SCRAPED DATA
+// ─────────────────────────────────────────────────────────────────────────────
+// PDF GENERATION
+// Fills the blank Senior_Checkout.pdf template with:
+//   Page 1: Student NAME, UID, Grad Date, Major (CSC), Concentration abbr
+//   Page 2: Remaining CS-major courses only — Hours, Course code, "Y" if C required,
+//            and Total Hours in the summary box
+// ─────────────────────────────────────────────────────────────────────────────
 async function generatePDF() {
   if (!lastScrapedData) return;
+
   const statusMsg = document.getElementById('statusMessage');
   statusMsg.innerText = "Generating PDF...";
-  //statusMsg.style.color = "#0275d8";
+  statusMsg.style.color = "#0275d8";
 
   try {
-    const { PDFDocument, rgb } = PDFLib;
+    const { PDFDocument, rgb, StandardFonts } = PDFLib;
 
-    //fetch
     const pdfUrl = chrome.runtime.getURL('assets/Senior_Checkout.pdf');
     const existingPdfBytes = await fetch(pdfUrl).then(res => res.arrayBuffer());
-    
-    //2
     const pdfDoc = await PDFDocument.load(existingPdfBytes);
-    const page = pdfDoc.getPage(0);
-    
-    //3
-    let y = 580;
-    const xCourse = 105;
-    const xGrade = 445;
-    const lineHeight = 17.5;
 
-    //4
-    lastScrapedData.masterCourseList.forEach(course => {
-      if (y > 50) {
-        page.drawText(course.code, { x: xCourse, y: y, size: 10});
-        page.drawText(course.grade, { x: xGrade, y: y, size: 10 });
-        y -=lineHeight;
+    const helvetica     = await pdfDoc.embedFont(StandardFonts.Helvetica);
+    const helveticaBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+
+    const { detectedConcentration, studentName, studentUID, gradDate } = lastScrapedData;
+    const selectedYear = document.getElementById('yearDropdown').value;
+
+    // ── Resolve concentration key and rules ──────────────────────────────────
+    const yearData = requirementDB["Computer Science"][selectedYear];
+    const normalize = str => str.toLowerCase().replace(/&/g, 'and').replace(/\s+/g, ' ').trim();
+    const normalizedDetected = normalize(detectedConcentration);
+    const concentrationKeys = Object.keys(yearData).filter(k => k !== 'metadata');
+    const concentrationKey = concentrationKeys.find(k => normalize(k) === normalizedDetected)
+      || concentrationKeys.find(k =>
+          normalize(k).includes(normalizedDetected) || normalizedDetected.includes(normalize(k))
+        )
+      || concentrationKeys[0];
+
+    const activeRules = yearData[concentrationKey];
+    const alternatives = yearData.metadata.alternative_classes;
+    const masterCourseList = lastScrapedData.masterCourseList;
+
+    // ── Build remaining CS-only course list ──────────────────────────────────
+    // Only includes courses defined in the concentration's requirements.
+    // Skips elective placeholders (codes ending in "+").
+    const remainingCourses = []; // { code, hours, requiresC }
+
+    activeRules.requirements.forEach(req => {
+      req.courses.forEach(courseObj => {
+        const baseCode  = typeof courseObj === 'object' ? courseObj.code       : courseObj;
+        const minGrade  = typeof courseObj === 'object' ? (courseObj.min_grade || null) : null;
+        const creditHrs = typeof courseObj === 'object' ? (courseObj.credits   || 3)    : 3;
+
+        if (baseCode.endsWith("+")) return; // skip elective placeholders
+
+        const validCodes = [baseCode, ...(alternatives[baseCode] || [])];
+        const taken = masterCourseList.find(c => validCodes.includes(c.code));
+
+        let isRemaining = false;
+        if (!taken) {
+          isRemaining = true;
+        } else if (minGrade === "C" && !taken.grade.includes("IP")) {
+          // Retake needed if grade is below C-
+          if (["F", "D+", "D", "D-"].some(dg => taken.grade.startsWith(dg))) {
+            isRemaining = true;
+          }
+        }
+
+        if (isRemaining && !remainingCourses.find(c => c.code === baseCode)) {
+          remainingCourses.push({ code: baseCode, hours: creditHrs, requiresC: minGrade === "C" });
+        }
+      });
+    });
+
+    const totalHours = remainingCourses.reduce((sum, c) => sum + (c.hours || 3), 0);
+    const concentrationAbbr = getConcentrationAbbr(detectedConcentration);
+    const PAGE_H = 792;
+    const BLACK  = rgb(0, 0, 0);
+    const FS     = 10; // standard font size
+
+    // ── PAGE 1 ───────────────────────────────────────────────────────────────
+    const page1 = pdfDoc.getPages()[0];
+
+    // NAME (label ends ~x=110, row top=90.8 in pdfplumber)
+    page1.drawText(studentName || "________________", {
+      x: 112, y: PAGE_H - 102,
+      size: FS, font: helveticaBold, color: BLACK,
+    });
+
+    // UID (label ends ~x=332, same row)
+    page1.drawText(studentUID ? `00${studentUID}`.slice(-8) : "________", {
+      x: 336, y: PAGE_H - 102,
+      size: FS, font: helveticaBold, color: BLACK,
+    });
+
+    // Degree info table — single data row.
+    // From the Abshire filled PDF visual, the data row sits just below the
+    // "Grad Date / Major / Concentration / Minor / Minor / Minor" header row.
+    // pdfplumber measured the header at top≈268.9, so the data row ≈ 291.
+    const DI_Y = PAGE_H - 302; // degree info row baseline
+
+    // Grad Date
+    page1.drawText(gradDate || "MM/YYYY", {
+      x: 87, y: DI_Y, size: FS, font: helvetica, color: BLACK,
+    });
+
+    // Major — always CSC
+    page1.drawText("CSC", {
+      x: 180, y: DI_Y, size: FS, font: helvetica, color: BLACK,
+    });
+
+    // Concentration abbreviation
+    page1.drawText(concentrationAbbr, {
+      x: 245, y: DI_Y, size: FS, font: helvetica, color: BLACK,
+    });
+
+    // ── PAGE 2: REMAINING COURSEWORK table ───────────────────────────────────
+    //
+    // Column X positions (measured from blank template):
+    //   Hours      x = 83
+    //   Requirement x = 150
+    //   C Grade1   x = 266   ← place "Y" here if min_grade === "C"
+    //   MJ/MN2     x = 319   (leave blank)
+    //   Comment    x = 420   (leave blank)
+    //
+    // Row Y positions (pdf-lib = 792 - pdfplumber_top):
+    //   MAJOR: label at pdfplumber top=132.5  → pdf-lib y=659.5  (don't overwrite)
+    //   First data row starts at pdf-lib y=646
+    //   Row spacing = 14.5 pt
+    //   Up to 14 rows fit before the MINOR: section
+    //
+    // Total Hours box:
+    //   pdfplumber top≈542.9  → pdf-lib y=249
+
+    const page2 = pdfDoc.getPages()[1];
+
+    const ROW_START_Y = 646;
+    const ROW_SPACING = 14.5;
+    const MAX_ROWS    = 14;
+
+    remainingCourses.slice(0, MAX_ROWS).forEach((course, i) => {
+      const rowY = ROW_START_Y - (i * ROW_SPACING);
+
+      // Hours
+      page2.drawText(String(course.hours || 3), {
+        x: 83, y: rowY, size: FS, font: helvetica, color: BLACK,
+      });
+
+      // Course code
+      page2.drawText(course.code, {
+        x: 150, y: rowY, size: FS, font: helvetica, color: BLACK,
+      });
+
+      // "Y" if a C or better is required
+      if (course.requiresC) {
+        page2.drawText("Y", {
+          x: 266, y: rowY, size: FS, font: helveticaBold, color: BLACK,
+        });
       }
     });
 
-    //5
+    // Total hours remaining box
+    page2.drawText(String(totalHours), {
+      x: 88, y: 249,
+      size: 11, font: helveticaBold, color: BLACK,
+    });
+
+    // ── Save & download ──────────────────────────────────────────────────────
     const pdfBytes = await pdfDoc.save();
-    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `Senior_Checkout_${lastScrapedData.detectedConcentration.replace(/\s+/g, '_')}.pdf`;
+    const blob     = new Blob([pdfBytes], { type: 'application/pdf' });
+    const link     = document.createElement('a');
+    link.href      = URL.createObjectURL(blob);
+
+    const safeName = (studentName || "Student")
+      .replace(/[^a-zA-Z0-9 _-]/g, '')
+      .replace(/\s+/g, '_');
+    link.download = `Senior_Checkout_${safeName}_${concentrationAbbr}.pdf`;
     link.click();
 
-    statusMsg.innerText = "PDF Generated!";
+    statusMsg.innerText = "✓ PDF Generated!";
+    statusMsg.style.color = "#28a745";
+
   } catch (err) {
     console.error("PDF Generation Error:", err);
-    statusMsg.innerText = "Error generating PDF.";
+    statusMsg.innerText = "Error generating PDF. Check console.";
+    statusMsg.style.color = "#d9534f";
   }
+}
+
+/**
+ * Converts a full concentration name to its standard 2–3 letter abbreviation.
+ * Add more entries here as new concentrations appear.
+ */
+function getConcentrationAbbr(fullName) {
+  const map = {
+    "cybersecurity":        "CYB",
+    "software engineering": "SEG",
+    "cloud computing and networking":     "CCN",
+    "data science and analytics":         "DSA",
+    "second discipline":  "2nd Disc",
+  };
+  const key = (fullName || "").toLowerCase().trim();
+  for (const [k, v] of Object.entries(map)) {
+    if (key.includes(k)) return v;
+  }
+  // Fallback: first 3 uppercase letters with no spaces
+  return key.replace(/\s+/g, '').slice(0, 3).toUpperCase() || "CS";
 }
 
 document.getElementById('pdfBtn').addEventListener('click', generatePDF);
