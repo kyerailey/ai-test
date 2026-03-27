@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Academic Tracker Extension",
+  "version": "1.0",
+  "description": "Scrapes Workday for courses and lists missing classes in a PDF.",
+  "permissions": [
+    "storage",
+    "downloads"
+  ],
+  "host_permissions": [
+    "https://www.myworkday.com/lsu/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://www.myworkday.com/lsu/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
