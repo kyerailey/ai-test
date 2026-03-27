@@ -432,7 +432,7 @@ async function generatePDF(gradDate) {
 
     const page2 = pdfDoc.getPages()[1];
 
-    const ROW_START_Y = 625;
+    const ROW_START_Y = 630;
     const ROW_SPACING = 16;
     const MAX_ROWS    = 14;
 
