@@ -242,7 +242,7 @@ document.getElementById('scrapeBtn').addEventListener('click', async () => {
 //   Page 2: Remaining CS-major courses only — Hours, Course code, "Y" if C required,
 //            and Total Hours in the summary box
 // ─────────────────────────────────────────────────────────────────────────────
-async function generatePDF() {
+async function generatePDF(gradDate) {
   if (!lastScrapedData) return;
 
   const statusMsg = document.getElementById('statusMessage');
@@ -259,7 +259,7 @@ async function generatePDF() {
     const helvetica     = await pdfDoc.embedFont(StandardFonts.Helvetica);
     const helveticaBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
-    const { detectedConcentration, studentName, studentUID, gradDate } = lastScrapedData;
+    const { detectedConcentration, studentName, studentUID } = lastScrapeData;
     const selectedYear = document.getElementById('yearDropdown').value;
 
     // ── Resolve concentration key and rules ──────────────────────────────────
@@ -337,7 +337,7 @@ async function generatePDF() {
     const DI_Y = PAGE_H - 302; // degree info row baseline
 
     // Grad Date
-    page1.drawText(gradDate || "MM/YYYY", {
+    page1.drawText(gradDate || "12/2026", {
       x: 87, y: DI_Y, size: FS, font: helvetica, color: BLACK,
     });
 
@@ -434,7 +434,7 @@ function getConcentrationAbbr(fullName) {
     "software engineering": "SEG",
     "cloud computing and networking":     "CCN",
     "data science and analytics":         "DSA",
-    "second discipline":  "2nd Disc",
+    "second discipline":  "SD",
   };
   const key = (fullName || "").toLowerCase().trim();
   for (const [k, v] of Object.entries(map)) {
@@ -444,5 +444,29 @@ function getConcentrationAbbr(fullName) {
   return key.replace(/\s+/g, '').slice(0, 3).toUpperCase() || "CS";
 }
 
-document.getElementById('pdfBtn').addEventListener('click', generatePDF);
+document.getElementById('pdfBtn').addEventListener('click', () => {
+  // Pre-fill with a smart default based on current month
+  const now = new Date();
+  const month = now.getMonth();
+  const year = now.getFullYear();
+  let defaultDate = month >= 9 ? `05/${year + 1}` : month >= 3 ? `12/${year}` : `05/${year}`;
+  document.getElementById('gradInput').value = defaultDate;
+  document.getElementById('gradModal').classList.add('show');
+});
+
+document.getElementById('modalCancel').addEventListener('click', () => {
+  document.getElementById('gradModal').classList.remove('show');
+});
+
+document.getElementById('modalConfirm').addEventListener('click', () => {
+  const input = document.getElementById('gradInput').value.trim();
+  // Validate MM/YYYY format
+  if (!/^(0[1-9]|1[0-2])\/[0-9]{4}$/.test(input)) {
+    document.getElementById('gradInput').style.border = '1px solid #d9534f';
+    document.getElementById('gradInput').placeholder = 'Invalid! Use MM/YYYY';
+    return;
+  }
+  document.getElementById('gradModal').classList.remove('show');
+  generatePDF(input); // pass the date into generatePDF
+});
 initializePopup();
