@@ -37,22 +37,24 @@
       <button id="resizeToggle">Toggle Large View</button>
     </div>
     <div id="statusMessage">Please select a year to begin.</div>
-    
   </div>
   <div id="resultsContainer"></div>
-  <script src="libs/pdf-lib.min.js"></script>
-  <script src="popup.js"></script>
 
+  <!-- MODAL MUST BE BEFORE THE SCRIPTS -->
   <div id="gradModal">
-  <div id="gradModalBox">
-    <h3>Enter Anticipated Graduation Date</h3>
-    <input type="text" id="gradInput" placeholder="MM/YYYY" maxlength="7" />
-    <div class="hint">Format: MM/YYYY (e.g. 05/2026 or 12/2026)</div>
-    <div class="btn-row">
-      <button id="modalCancel">Cancel</button>
-      <button id="modalConfirm">Generate PDF</button>
+    <div id="gradModalBox">
+      <h3>Enter Anticipated Graduation Date</h3>
+      <input type="text" id="gradInput" placeholder="MM/YYYY" maxlength="7" />
+      <div class="hint">Format: MM/YYYY (e.g. 05/2026 or 12/2026)</div>
+      <div class="btn-row">
+        <button id="modalCancel">Cancel</button>
+        <button id="modalConfirm">Generate PDF</button>
+      </div>
     </div>
   </div>
-</div>
+
+  <!-- SCRIPTS ALWAYS LAST -->
+  <script src="libs/pdf-lib.min.js"></script>
+  <script src="popup.js"></script>
 </body>
 </html>

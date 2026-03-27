@@ -259,7 +259,7 @@ async function generatePDF(gradDate) {
     const helvetica     = await pdfDoc.embedFont(StandardFonts.Helvetica);
     const helveticaBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
-    const { detectedConcentration, studentName, studentUID } = lastScrapeData;
+    const { detectedConcentration, studentName, studentUID } = lastScrapedData;
     const selectedYear = document.getElementById('yearDropdown').value;
 
     // ── Resolve concentration key and rules ──────────────────────────────────
