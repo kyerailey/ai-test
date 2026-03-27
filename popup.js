@@ -1,5 +1,5 @@
 let requirementDB = null;
-let lastScrapedData = null; // NEW: Global storage for the PDF function
+let lastScrapedData = null;
 
 async function initializePopup() {
   try {
@@ -61,6 +61,7 @@ document.getElementById('scrapeBtn').addEventListener('click', async () => {
 
         const rowText = row.innerText.toUpperCase();
 
+        // 1. Capture Headers (Excluding GPA rows as requested)
         if ((rowText.includes("LSUAM") || rowText.includes("MAJOR GPA")) && !rowText.includes("GPA")) {
           auditData.push({
             name: cells[0],
@@ -70,12 +71,14 @@ document.getElementById('scrapeBtn').addEventListener('click', async () => {
           });
         }
 
+        // 2. Identify Course Rows
         const courseMatchIndex = cells.findIndex(c => /^[A-Z]{2,4}\s*\d{4}/.test(c.toUpperCase()));
         
         if (courseMatchIndex !== -1) {
           const rawCode = cells[courseMatchIndex].match(/^[A-Z]{2,4}\s*\d{4}/)[0];
-          const code = rawCode.replace(/^([A-Z]+)(\d+)/, '$1 $2'); 
+          const code = rawCode.replace(/^([A-Z]+)(\d+)/, '$1 $2'); // Ensure space for JSON matching
           
+          // Use findLast to prioritize manual injections/edits over hidden Workday data
           const gradeMatch = cells.findLast((c, i) => {
             if (i === courseMatchIndex) return false;
             const cellText = c.toUpperCase().trim();
@@ -96,10 +99,10 @@ document.getElementById('scrapeBtn').addEventListener('click', async () => {
 
     const { auditData, masterCourseList, detectedConcentration } = injectionResults[0].result;
     
-    // NEW: Save data and enable the Export button
+    // KYE UPDATE: Saving data to the pdf and having the export button to pdf
     lastScrapedData = { auditData, masterCourseList, detectedConcentration };
-    document.getElementById('printBtn').disabled = false;
-
+    document.getElementById('pdfBtn').disabled = false;
+    
     const statusMsg = document.getElementById('statusMessage');
     statusMsg.innerText = `Detected: ${detectedConcentration}`;
     statusMsg.style.color = "#28a745";
@@ -114,10 +117,11 @@ document.getElementById('scrapeBtn').addEventListener('click', async () => {
       || concentrationKeys[0];
 
     if (!concentrationKey) {
-      statusMsg.innerText = `Error: No matching concentration found`;
+      statusMsg.innerText = `Error: No matching concentration found for "${detectedConcentration}"`;
       statusMsg.style.color = "#d9534f";
       return;
     }
+    console.log(`[SCS] Detected: "${detectedConcentration}" → Matched to: "${concentrationKey}"`);
 
     const activeRules = yearData[concentrationKey];
     const alternatives = yearData.metadata.alternative_classes;
@@ -155,7 +159,7 @@ document.getElementById('scrapeBtn').addEventListener('click', async () => {
           const minGrade = typeof courseObj === 'object' ? courseObj.min_grade : null;
           const validCodes = [baseCode, ...(alternatives[baseCode] || [])];
 
-          if (baseCode.endsWith("+")) return; 
+          if (baseCode.endsWith("+")) return;
           const taken = masterCourseList.find(c => validCodes.includes(c.code));
 
           if (!taken) {
@@ -203,54 +207,53 @@ document.getElementById('scrapeBtn').addEventListener('click', async () => {
   });
 });
 
-// NEW: PDF GENERATION FUNCTION
+//KYE UPDATED IMPLEMENTATION: GENERATING PDF FROM SCRAPED DATA
 async function generatePDF() {
   if (!lastScrapedData) return;
   const statusMsg = document.getElementById('statusMessage');
   statusMsg.innerText = "Generating PDF...";
+  //statusMsg.style.color = "#0275d8";
 
   try {
     const { PDFDocument, rgb } = PDFLib;
-    
-    // 1. Fetch template from assets folder
-    const pdfUrl = chrome.runtime.getURL('assets/Senior_Checkout_Blank_26.pdf');
-    const existingBytes = await fetch(pdfUrl).then(res => res.arrayBuffer());
-    
-    // 2. Load the PDF
-    const pdfDoc = await PDFDocument.load(existingBytes);
-    const page = pdfDoc.getPages()[0];
 
-    // 3. Printing coordinates (Calibration needed for LSU form)
-    let y = 580; 
+    //fetch
+    const pdfUrl = chrome.runtime.getURL('assets/Senior_Checkout.pdf');
+    const existingPdfBytes = await fetch(pdfUrl).then(res => res.arrayBuffer());
+    
+    //2
+    const pdfDoc = await PDFDocument.load(existingPdfBytes);
+    const page = pdfDoc.getPage(0);
+    
+    //3
+    let y = 580;
     const xCourse = 105;
     const xGrade = 445;
     const lineHeight = 17.5;
 
-    // 4. Draw scraped course data
+    //4
     lastScrapedData.masterCourseList.forEach(course => {
       if (y > 50) {
-        page.drawText(course.code, { x: xCourse, y: y, size: 10 });
+        page.drawText(course.code, { x: xCourse, y: y, size: 10});
         page.drawText(course.grade, { x: xGrade, y: y, size: 10 });
-        y -= lineHeight;
+        y -=lineHeight;
       }
     });
 
-    // 5. Finalize and Download
+    //5
     const pdfBytes = await pdfDoc.save();
-    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = `Senior_Checkout_${lastScrapedData.detectedConcentration.replace(/\s+/g, '_')}.pdf`;
     link.click();
-    
-    statusMsg.innerText = "PDF Downloaded!";
+
+    statusMsg.innerText = "PDF Generated!";
   } catch (err) {
-    console.error("PDF Export Error:", err);
-    statusMsg.innerText = "Error exporting PDF.";
+    console.error("PDF Generation Error:", err);
+    statusMsg.innerText = "Error generating PDF.";
   }
 }
 
-// NEW: Event Listener for Print Button
-document.getElementById('printBtn').addEventListener('click', generatePDF);
-
+document.getElementById('pdfBtn').addEventListener('click', generatePDF);
 initializePopup();

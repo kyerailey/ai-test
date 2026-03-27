@@ -1,0 +1,1102 @@
+{
+  "Computer Science": {
+    "2021-2022": {
+      "metadata": {
+        "alternative_classes": {
+          "CALCULUS_1": ["MATH 1550", "MATH 1551"],
+          "CALCULUS_2": ["MATH 1552", "MATH 1553"],
+          "DISCRETE_STRUCTURES": ["CSC 2259", "EE 3740"],
+          "COMPUTER_ORG": ["CSC 3501", "EE 3755"],
+          "STATISTICS": ["IE 3302", "MATH 3355", "EE 3150", "EXST 4050"],
+          "GROUP_A_ELECTIVES": [
+            "CSC", "BE", "CHE", "CE", "CM", "EE", "ENGR", "EVEG", "IE", "ME",
+            "PETE", "EMS", "ENVS", "OCS", "MATH", "ECON", "FIN", "ASTR", "BIOL",
+            "CHEM", "GEOG", "GEOL", "PHYS", "ISDS 3100", "ISDS 3105", "ISDS 3120", "ISDS 4000+"
+          ],
+          "GROUP_B_ELECTIVES": [
+            "ART 2050", "ART 2055", "ART 2210", "ART 2220", "ART 2230", "ART 2551",
+            "ART 4020", "ART 4050", "ART 4055", "ART 4059", "ART 4230", "ART 4240",
+            "ART 4290", "ART 4550", "ART 4560", "ART 7250", "ART 7255", "ARTH 4480",
+            "ARTH 4482", "ARTH 4484", "MC 2035", "MC 3031", "MC 4002", "MC 4015",
+            "MC 4260", "MC 4550", "MC 4600", "MC 4720", "MUS 2745", "MUS 4744",
+            "MUS 4745", "MUS 4746", "MUS 4748", "ENGL 2009", "ENGL 2231", "ENGL 4000",
+            "ENGL 4009", "ENGL 7109"
+          ]
+        }
+      },
+      "Cybersecurity": {
+        "total_required_credit_hours": 120,
+        "requirements": [
+          {
+            "category": "English Composition",
+            "courses": [
+              { "code": "ENGL 1001", "min_grade": "C" },
+              { "code": "ENGL 2000", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "Mathematics & Statistics",
+            "courses": [
+              { "code": "CALCULUS_1", "min_grade": "C" },
+              { "code": "CALCULUS_2", "min_grade": "C" },
+              "MATH 2090",
+              "STATISTICS"
+            ]
+          },
+          {
+            "category": "Lower Level Courses",
+            "courses": [
+              { "code": "CSC 1350", "min_grade": "C" },
+              { "code": "CSC 1351", "min_grade": "C" },
+              { "code": "DISCRETE_STRUCTURES", "min_grade": "C" },
+              "CSC 2362",
+              "CSC 2262"
+            ]
+          },
+          {
+            "category": "3000 Level",
+            "courses": [
+              { "code": "CSC 3102", "min_grade": "C" },
+              { "code": "CSC 3200", "min_grade": "C" },
+              "CSC 3304",
+              { "code": "CSC 3380", "min_grade": "C" },
+              "COMPUTER_ORG"
+            ]
+          },
+          {
+            "category": "4000 Level",
+            "courses": [
+              { "code": "CSC 4101", "min_grade": "C" },
+              { "code": "CSC 4103", "min_grade": "C" },
+              { "code": "CSC 4330", "min_grade": "C" },
+              "CSC 4501",
+              "CSC 4562",
+              "CSC 4360",
+              "CSC 4362"
+            ]
+          },
+          {
+            "category": "Area Elective",
+            "courses": ["CSC 3730", "CSC 4243", "CSC 4402", "CSC 4444", "CSC 4610", "IE 4462", "IE 4466"]
+          },
+          { "category": "Group A", "courses": ["GROUP_A_ELECTIVES"] },
+          { "category": "Group A or Group B", "courses": ["GROUP_A_ELECTIVES", "GROUP_B_ELECTIVES"] }
+        ]
+      },
+      "Cloud Computing and Networking": {
+        "total_required_credit_hours": 120,
+        "requirements": [
+          {
+            "category": "English Composition",
+            "courses": [
+              { "code": "ENGL 1001", "min_grade": "C" },
+              { "code": "ENGL 2000", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "Mathematics & Statistics",
+            "courses": [
+              { "code": "CALCULUS_1", "min_grade": "C" },
+              { "code": "CALCULUS_2", "min_grade": "C" },
+              "MATH 2090",
+              "STATISTICS"
+            ]
+          },
+          {
+            "category": "Lower Level Courses",
+            "courses": [
+              { "code": "CSC 1350", "min_grade": "C" },
+              { "code": "CSC 1351", "min_grade": "C" },
+              { "code": "DISCRETE_STRUCTURES", "min_grade": "C" },
+              "CSC 2262",
+              { "code": "CSC 2610", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "3000 Level",
+            "courses": [
+              { "code": "CSC 3102", "min_grade": "C" },
+              { "code": "CSC 3200", "min_grade": "C" },
+              { "code": "CSC 3380", "min_grade": "C" },
+              "COMPUTER_ORG"
+            ]
+          },
+          {
+            "category": "4000 Level",
+            "courses": [
+              { "code": "CSC 4101", "min_grade": "C" },
+              { "code": "CSC 4103", "min_grade": "C" },
+              { "code": "CSC 4330", "min_grade": "C" },
+              "CSC 4402",
+              "CSC 4501",
+              "CSC 4610"
+            ]
+          },
+          {
+            "category": "Area Elective",
+            "courses": [
+              "CSC 4304", "CSC 4362", "CSC 4444", "CSC 4512", "CSC 4562", "CSC 4585", 
+              "CSC 4762", "EE 4625", "EE 4660", "IE 4426", "ISDS 4120", "ISDS 4123", 
+              "MATH 3355", "MATH 4023", "MATH 4025", "MATH 4171", "MATH 4172", "MATH 4325"
+            ]
+          },
+          { "category": "Group A", "courses": ["GROUP_A_ELECTIVES"] },
+          { "category": "Group A or Group B", "courses": ["GROUP_A_ELECTIVES", "GROUP_B_ELECTIVES"] }
+        ]
+      },
+      "Second Discipline": {
+        "total_required_credit_hours": 120,
+        "requirements": [
+          {
+            "category": "English Composition",
+            "courses": [
+              { "code": "ENGL 1001", "min_grade": "C" },
+              { "code": "ENGL 2000", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "Mathematics & Statistics",
+            "courses": [
+              { "code": "CALCULUS_1", "min_grade": "C" },
+              { "code": "CALCULUS_2", "min_grade": "C" },
+              "MATH 2090",
+              "STATISTICS"
+            ]
+          },
+          {
+            "category": "Lower Level Courses",
+            "courses": [
+              { "code": "CSC 1350", "min_grade": "C" },
+              { "code": "CSC 1351", "min_grade": "C" },
+              { "code": "DISCRETE_STRUCTURES", "min_grade": "C" },
+              "CSC 2262"
+            ]
+          },
+          {
+            "category": "3000 Level",
+            "courses": [
+              { "code": "CSC 3102", "min_grade": "C" },
+              { "code": "CSC 3200", "min_grade": "C" },
+              { "code": "CSC 3380", "min_grade": "C" },
+              "COMPUTER_ORG"
+            ]
+          },
+          {
+            "category": "4000 Level",
+            "courses": [
+              { "code": "CSC 4101", "min_grade": "C" },
+              { "code": "CSC 4103", "min_grade": "C" },
+              { "code": "CSC 4330", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "CSC Electives",
+            "courses": [
+              "CSC 2000+",
+              "CSC 2000+",
+              "CSC 3000+",
+              "CSC 4000+",
+              "CSC 4000+"
+            ]
+          },
+          {
+            "category": "Area Elective",
+            "courses": [
+              "SD Area Elective",
+              "SD Area Elective",
+              "SD Area Elective",
+              "SD Area Elective",
+              "SD Area Elective"
+            ],
+            "notes": "15 hours in one area outside CSC. Ordinarily at least two courses numbered 3000 or above."
+          },
+          { "category": "Group A", "courses": ["GROUP_A_ELECTIVES"] },
+          { "category": "Group A or Group B", "courses": ["GROUP_A_ELECTIVES", "GROUP_B_ELECTIVES"] }
+        ]
+      },
+      "Data Science and Analytics": {
+        "total_required_credit_hours": 120,
+        "requirements": [
+          {
+            "category": "English Composition",
+            "courses": [
+              { "code": "ENGL 1001", "min_grade": "C" },
+              { "code": "ENGL 2000", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "Mathematics & Statistics",
+            "courses": [
+              { "code": "CALCULUS_1", "min_grade": "C" },
+              { "code": "CALCULUS_2", "min_grade": "C" },
+              "MATH 2090",
+              "STATISTICS"
+            ]
+          },
+          {
+            "category": "Lower Level Courses",
+            "courses": [
+              { "code": "CSC 1350", "min_grade": "C" },
+              { "code": "CSC 1351", "min_grade": "C" },
+              { "code": "DISCRETE_STRUCTURES", "min_grade": "C" },
+              "CSC 2262",
+              { "code": "CSC 2730", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "3000 Level",
+            "courses": [
+              { "code": "CSC 3102", "min_grade": "C" },
+              { "code": "CSC 3200", "min_grade": "C" },
+              { "code": "CSC 3380", "min_grade": "C" },
+              "COMPUTER_ORG",
+              "CSC 3730"
+            ]
+          },
+          {
+            "category": "4000 Level",
+            "courses": [
+              { "code": "CSC 4101", "min_grade": "C" },
+              { "code": "CSC 4103", "min_grade": "C" },
+              { "code": "CSC 4330", "min_grade": "C" },
+              "CSC 4402",
+              "CSC 4740"
+            ]
+          },
+          {
+            "category": "CSC Electives",
+            "courses": [
+              "CSC 2000+",
+              "CSC 3000+",
+              "CSC 4000+"
+            ]
+          },
+          {
+            "category": "Area Elective",
+            "courses": [
+              "CSC 4501", "CSC 4512", "CSC 4610", "EE 3150", "ISDS 3105",
+              "ISDS 4118", "ISDS 4141", "MATH 3355", "MATH 4024", "MATH 4025",
+              "CSC 4000+"
+            ],
+            "notes": "6 hours total. 3 hours must be from the specific list; 3 hours can be any CSC 4000+ level course."
+          },
+          { "category": "Group A", "courses": ["GROUP_A_ELECTIVES"] },
+          { "category": "Group A or Group B", "courses": ["GROUP_A_ELECTIVES", "GROUP_B_ELECTIVES"] }
+        ]
+      },
+      "Software Engineering": {
+        "total_required_credit_hours": 120,
+        "requirements": [
+          {
+            "category": "English Composition",
+            "courses": [
+              { "code": "ENGL 1001", "min_grade": "C" },
+              { "code": "ENGL 2000", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "Mathematics & Statistics",
+            "courses": [
+              { "code": "CALCULUS_1", "min_grade": "C" },
+              { "code": "CALCULUS_2", "min_grade": "C" },
+              "MATH 2090",
+              "STATISTICS"
+            ]
+          },
+          {
+            "category": "Lower Level Courses",
+            "courses": [
+              { "code": "CSC 1350", "min_grade": "C" },
+              { "code": "CSC 1351", "min_grade": "C" },
+              { "code": "DISCRETE_STRUCTURES", "min_grade": "C" },
+              "CSC 2262"
+            ]
+          },
+          {
+            "category": "3000 Level",
+            "courses": [
+              { "code": "CSC 3102", "min_grade": "C" },
+              { "code": "CSC 3200", "min_grade": "C" },
+              { "code": "CSC 3380", "min_grade": "C" },
+              "COMPUTER_ORG"
+            ]
+          },
+          {
+            "category": "4000 Level",
+            "courses": [
+              { "code": "CSC 4101", "min_grade": "C" },
+              { "code": "CSC 4103", "min_grade": "C" },
+              { "code": "CSC 4330", "min_grade": "C" },
+              "CSC 4351",
+              "CSC 4402"
+            ]
+          },
+          {
+            "category": "CSC Electives",
+            "courses": [
+              "CSC 2000+",
+              "CSC 3000+",
+              "CSC 2000+",
+              "CSC 4000+"
+            ]
+          },
+          {
+            "category": "Area Elective",
+            "courses": [
+              "CSC 4243", "CSC 4263", "CSC 4304", "CSC 4356", "CSC 4357",
+              "CSC 4360", "CSC 4362", "CSC 4370", "CSC 4444", "CSC 4501",
+              "CSC 4562", "CSC 4585", "CSC 4610", "CSC 4740", "CSC 4890",
+              "EE 4859", "IE 4461", "ISDS 4111", "ISDS 4112", "ISDS 4113",
+              "ISDS 4120", "ISDS 4125", "ISDS 4141"
+            ],
+            "notes": "6 hours required from the SEG approved list."
+          },
+          { "category": "Group A", "courses": ["GROUP_A_ELECTIVES"] },
+          { "category": "Group A or Group B", "courses": ["GROUP_A_ELECTIVES", "GROUP_B_ELECTIVES"] }
+        ]
+      }
+    },
+    "2022-2023": {
+      "metadata": {
+        "alternative_classes": {
+          "CALCULUS_1": ["MATH 1550", "MATH 1551"],
+          "CALCULUS_2": ["MATH 1552", "MATH 1553"],
+          "DISCRETE_STRUCTURES": ["CSC 2259", "EE 3740"],
+          "COMPUTER_ORG": ["CSC 3501", "EE 3755"],
+          "STATISTICS": ["IE 3302", "MATH 3355", "EE 3150", "EXST 4050"],
+          "GROUP_A_ELECTIVES": [
+            "CSC", "BE", "CHE", "CE", "CM", "EE", "ENGR", "EVEG", "IE", "ME",
+            "PETE", "EMS", "ENVS", "OCS", "MATH", "ECON", "FIN", "ASTR", "BIOL",
+            "CHEM", "GEOG", "GEOL", "PHYS", "ISDS 3100", "ISDS 3105", "ISDS 3120", "ISDS 4000+"
+          ],
+          "GROUP_B_ELECTIVES": [
+            "ART 2050", "ART 2055", "ART 2210", "ART 2220", "ART 2230", "ART 2551",
+            "ART 4020", "ART 4050", "ART 4055", "ART 4059", "ART 4230", "ART 4240",
+            "ART 4290", "ART 4550", "ART 4560", "ART 7250", "ART 7255", "ARTH 4480",
+            "ARTH 4482", "ARTH 4484", "MC 2035", "MC 3031", "MC 4002", "MC 4015",
+            "MC 4260", "MC 4550", "MC 4600", "MC 4720", "MUS 2745", "MUS 4744",
+            "MUS 4745", "MUS 4746", "MUS 4748", "ENGL 2009", "ENGL 2231", "ENGL 4000",
+            "ENGL 4009", "ENGL 7109"
+          ]
+        }
+      },
+      "Cloud Computing and Networking": {
+        "total_required_credit_hours": 120,
+        "requirements": [
+          {
+            "category": "English Composition",
+            "courses": [
+              { "code": "ENGL 1001", "min_grade": "C" },
+              { "code": "ENGL 2000", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "Mathematics & Statistics",
+            "courses": [
+              { "code": "CALCULUS_1", "min_grade": "C" },
+              { "code": "CALCULUS_2", "min_grade": "C" },
+              "MATH 2090",
+              "STATISTICS"
+            ]
+          },
+          {
+            "category": "Lower Level Courses",
+            "courses": [
+              { "code": "CSC 1350", "min_grade": "C" },
+              { "code": "CSC 1351", "min_grade": "C" },
+              { "code": "DISCRETE_STRUCTURES", "min_grade": "C" },
+              "CSC 2262",
+              { "code": "CSC 2610", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "3000 Level",
+            "courses": [
+              { "code": "CSC 3102", "min_grade": "C" },
+              { "code": "CSC 3200", "min_grade": "C" },
+              { "code": "CSC 3380", "min_grade": "C" },
+              "COMPUTER_ORG"
+            ]
+          },
+          {
+            "category": "4000 Level",
+            "courses": [
+              { "code": "CSC 4101", "min_grade": "C" },
+              { "code": "CSC 4103", "min_grade": "C" },
+              { "code": "CSC 4330", "min_grade": "C" },
+              "CSC 4402",
+              "CSC 4501",
+              "CSC 4610",
+              "CSC 4562"
+            ]
+          },
+          {
+            "category": "CSC Electives",
+            "courses": [
+              "CSC 2000+"
+            ]
+          },
+          {
+            "category": "Area Elective",
+            "courses": [
+              "CSC 3304", "CSC 4362", "CSC 4444", "CSC 4512", "CSC 4585",
+              "CSC 4762", "EE 4625", "EE 4660", "IE 4426", "ISDS 4120",
+              "ISDS 4123", "MATH 3355", "MATH 4023", "MATH 4025",
+              "MATH 4171", "MATH 4172", "MATH 4325"
+            ]
+          },
+          { "category": "Group A", "courses": ["GROUP_A_ELECTIVES"] },
+          { "category": "Group A or Group B", "courses": ["GROUP_A_ELECTIVES", "GROUP_B_ELECTIVES"] }
+        ]
+      },
+      "Second Discipline": {
+        "total_required_credit_hours": 120,
+        "requirements": [
+          {
+            "category": "English Composition",
+            "courses": [
+              { "code": "ENGL 1001", "min_grade": "C" },
+              { "code": "ENGL 2000", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "Mathematics & Statistics",
+            "courses": [
+              { "code": "CALCULUS_1", "min_grade": "C" },
+              { "code": "CALCULUS_2", "min_grade": "C" },
+              "MATH 2090",
+              "STATISTICS"
+            ]
+          },
+          {
+            "category": "Lower Level Courses",
+            "courses": [
+              { "code": "CSC 1350", "min_grade": "C" },
+              { "code": "CSC 1351", "min_grade": "C" },
+              { "code": "DISCRETE_STRUCTURES", "min_grade": "C" },
+              "CSC 2262"
+            ]
+          },
+          {
+            "category": "3000 Level",
+            "courses": [
+              { "code": "CSC 3102", "min_grade": "C" },
+              { "code": "CSC 3200", "min_grade": "C" },
+              { "code": "CSC 3380", "min_grade": "C" },
+              "COMPUTER_ORG"
+            ]
+          },
+          {
+            "category": "4000 Level",
+            "courses": [
+              { "code": "CSC 4101", "min_grade": "C" },
+              { "code": "CSC 4103", "min_grade": "C" },
+              { "code": "CSC 4330", "min_grade": "C" },
+              "CSC 4402"
+            ]
+          },
+          {
+            "category": "CSC Electives",
+            "courses": [
+              "CSC 2000+",
+              "CSC 2000+",
+              "CSC 3000+",
+              "CSC 4000+"
+            ]
+          },
+          {
+            "category": "Area Elective",
+            "courses": [
+              "SD Area Elective",
+              "SD Area Elective",
+              "SD Area Elective",
+              "SD Area Elective",
+              "SD Area Elective"
+            ],
+            "notes": "15 hours total. Ordinarily at least two courses numbered 3000 or above."
+          },
+          { "category": "Group A", "courses": ["GROUP_A_ELECTIVES"] },
+          { "category": "Group A or Group B", "courses": ["GROUP_A_ELECTIVES", "GROUP_B_ELECTIVES"] }
+        ]
+      },
+      "Cybersecurity": {
+        "total_required_credit_hours": 120,
+        "requirements": [
+          {
+            "category": "English Composition",
+            "courses": [
+              { "code": "ENGL 1001", "min_grade": "C" },
+              { "code": "ENGL 2000", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "Mathematics & Statistics",
+            "courses": [
+              { "code": "CALCULUS_1", "min_grade": "C" },
+              { "code": "CALCULUS_2", "min_grade": "C" },
+              "MATH 2090",
+              "STATISTICS"
+            ]
+          },
+          {
+            "category": "Lower Level Courses",
+            "courses": [
+              { "code": "CSC 1350", "min_grade": "C" },
+              { "code": "CSC 1351", "min_grade": "C" },
+              { "code": "DISCRETE_STRUCTURES", "min_grade": "C" },
+              "CSC 2262",
+              "CSC 2362"
+            ]
+          },
+          {
+            "category": "3000 Level",
+            "courses": [
+              { "code": "CSC 3102", "min_grade": "C" },
+              { "code": "CSC 3200", "min_grade": "C" },
+              "CSC 3304",
+              { "code": "CSC 3380", "min_grade": "C" },
+              "COMPUTER_ORG"
+            ]
+          },
+          {
+            "category": "4000 Level",
+            "courses": [
+              { "code": "CSC 4101", "min_grade": "C" },
+              { "code": "CSC 4103", "min_grade": "C" },
+              { "code": "CSC 4330", "min_grade": "C" },
+              "CSC 4360",
+              "CSC 4362",
+              "CSC 4402",
+              "CSC 4501",
+              "CSC 4562"
+            ]
+          },
+          {
+            "category": "Area Elective",
+            "courses": [
+              "CSC 3730", "CSC 4243", "CSC 4444", "CSC 4610",
+              "CSC 4762", "IE 4462", "IE 4466"
+            ],
+            "notes": "3 hours required from the approved CYB list."
+          },
+          { "category": "Group A", "courses": ["GROUP_A_ELECTIVES"] },
+          { "category": "Group A or Group B", "courses": ["GROUP_A_ELECTIVES", "GROUP_B_ELECTIVES"] }
+        ]
+      },
+      "Data Science and Analytics": {
+        "total_required_credit_hours": 120,
+        "requirements": [
+          {
+            "category": "English Composition",
+            "courses": [
+              { "code": "ENGL 1001", "min_grade": "C" },
+              { "code": "ENGL 2000", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "Mathematics & Statistics",
+            "courses": [
+              { "code": "CALCULUS_1", "min_grade": "C" },
+              { "code": "CALCULUS_2", "min_grade": "C" },
+              "MATH 2090",
+              "STATISTICS"
+            ]
+          },
+          {
+            "category": "Lower Level Courses",
+            "courses": [
+              { "code": "CSC 1350", "min_grade": "C" },
+              { "code": "CSC 1351", "min_grade": "C" },
+              { "code": "DISCRETE_STRUCTURES", "min_grade": "C" },
+              "CSC 2262",
+              { "code": "CSC 2730", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "3000 Level",
+            "courses": [
+              { "code": "CSC 3102", "min_grade": "C" },
+              { "code": "CSC 3200", "min_grade": "C" },
+              { "code": "CSC 3380", "min_grade": "C" },
+              "COMPUTER_ORG",
+              "CSC 3730"
+            ]
+          },
+          {
+            "category": "4000 Level",
+            "courses": [
+              { "code": "CSC 4101", "min_grade": "C" },
+              { "code": "CSC 4103", "min_grade": "C" },
+              { "code": "CSC 4330", "min_grade": "C" },
+              "CSC 4402",
+              "CSC 4740",
+              "CSC 4343"
+            ]
+          },
+          {
+            "category": "CSC Electives",
+            "courses": [
+              "CSC 2000+",
+              "CSC 4000+"
+            ]
+          },
+          {
+            "category": "Area Elective",
+            "courses": [
+              "CSC 4444", "CSC 4501", "CSC 4512", "CSC 4610", "CSC 4762",
+              "EE 3150", "ISDS 3105", "ISDS 4118", "ISDS 4141",
+              "MATH 3355", "MATH 4024", "MATH 4025",
+              "CSC 4000+"
+            ],
+            "notes": "6 hours total. 3 hours must be from the specific list; 3 hours can be any CSC 4000+ level course."
+          },
+          { "category": "Group A", "courses": ["GROUP_A_ELECTIVES"] },
+          { "category": "Group A or Group B", "courses": ["GROUP_A_ELECTIVES", "GROUP_B_ELECTIVES"] }
+        ]
+      },
+      "Software Engineering": {
+        "total_required_credit_hours": 120,
+        "requirements": [
+          {
+            "category": "English Composition",
+            "courses": [
+              { "code": "ENGL 1001", "min_grade": "C" },
+              { "code": "ENGL 2000", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "Mathematics & Statistics",
+            "courses": [
+              { "code": "CALCULUS_1", "min_grade": "C" },
+              { "code": "CALCULUS_2", "min_grade": "C" },
+              "MATH 2090",
+              "STATISTICS"
+            ]
+          },
+          {
+            "category": "Lower Level Courses",
+            "courses": [
+              { "code": "CSC 1350", "min_grade": "C" },
+              { "code": "CSC 1351", "min_grade": "C" },
+              { "code": "DISCRETE_STRUCTURES", "min_grade": "C" },
+              "CSC 2262"
+            ]
+          },
+          {
+            "category": "3000 Level",
+            "courses": [
+              { "code": "CSC 3102", "min_grade": "C" },
+              { "code": "CSC 3200", "min_grade": "C" },
+              "CSC 3304",
+              { "code": "CSC 3380", "min_grade": "C" },
+              "COMPUTER_ORG"
+            ]
+          },
+          {
+            "category": "4000 Level",
+            "courses": [
+              { "code": "CSC 4101", "min_grade": "C" },
+              { "code": "CSC 4103", "min_grade": "C" },
+              { "code": "CSC 4330", "min_grade": "C" },
+              "CSC 4332",
+              "CSC 4351",
+              "CSC 4402"
+            ]
+          },
+          {
+            "category": "CSC Electives",
+            "courses": [
+              "CSC 2000+",
+              "CSC 2000+"
+            ]
+          },
+          {
+            "category": "Area Elective",
+            "courses": [
+              "CSC 4243", "CSC 4263", "CSC 4356", "CSC 4357", "CSC 4360",
+              "CSC 4362", "CSC 4370", "CSC 4444", "CSC 4501", "CSC 4562",
+              "CSC 4585", "CSC 4610", "CSC 4740", "CSC 4762", "CSC 4890",
+              "EE 4859", "IE 4461", "ISDS 4111", "ISDS 4112", "ISDS 4113",
+              "ISDS 4120", "ISDS 4125", "ISDS 4141"
+            ],
+            "notes": "6 hours required from the approved SEG list."
+          },
+          { "category": "Group A", "courses": ["GROUP_A_ELECTIVES"] },
+          { "category": "Group A or Group B", "courses": ["GROUP_A_ELECTIVES", "GROUP_B_ELECTIVES"] }
+        ]
+      }
+    },
+    "2023-2024": {
+      "metadata": {
+        "alternative_classes": {
+          "CALCULUS_1": ["MATH 1550", "MATH 1551"],
+          "CALCULUS_2": ["MATH 1552", "MATH 1553"],
+          "DISCRETE_STRUCTURES": ["CSC 2259", "EE 3740"],
+          "COMPUTER_ORG": ["CSC 3501", "EE 3755"],
+          "STATISTICS": ["IE 3302", "MATH 3355", "EE 3150", "EXST 4050"],
+          "GROUP_A_ELECTIVES": [
+            "CSC", "BE", "CHE", "CE", "CM", "EE", "ENGR", "EVEG", "IE", "ME",
+            "PETE", "EMS", "ENVS", "OCS", "MATH", "ECON", "FIN", "ASTR", "BIOL",
+            "CHEM", "GEOG", "GEOL", "PHYS", "ISDS 3100", "ISDS 3105", "ISDS 3120", "ISDS 4000+"
+          ],
+          "GROUP_B_ELECTIVES": [
+            "ART 2050", "ART 2055", "ART 2210", "ART 2220", "ART 2230", "ART 2551",
+            "ART 4020", "ART 4050", "ART 4055", "ART 4059", "ART 4230", "ART 4240",
+            "ART 4290", "ART 4550", "ART 4560", "ART 7250", "ART 7255", "ARTH 4480",
+            "ARTH 4482", "ARTH 4484", "MC 2035", "MC 3031", "MC 4002", "MC 4015",
+            "MC 4260", "MC 4550", "MC 4600", "MC 4720", "MUS 2745", "MUS 4744",
+            "MUS 4745", "MUS 4746", "MUS 4748", "ENGL 2009", "ENGL 2231", "ENGL 4000",
+            "ENGL 4009", "ENGL 7109"
+          ]
+        }
+      },
+      "Cloud Computing and Networking": {
+        "total_required_credit_hours": 120,
+        "requirements": [
+          {
+            "category": "English Composition",
+            "courses": [
+              { "code": "ENGL 1001", "min_grade": "C" },
+              { "code": "ENGL 2000", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "Mathematics & Statistics",
+            "courses": [
+              { "code": "CALCULUS_1", "min_grade": "C" },
+              { "code": "CALCULUS_2", "min_grade": "C" },
+              "MATH 2090",
+              "STATISTICS"
+            ]
+          },
+          {
+            "category": "Lower Level Courses",
+            "courses": [
+              { "code": "CSC 1350", "min_grade": "C" },
+              { "code": "CSC 1351", "min_grade": "C" },
+              { "code": "DISCRETE_STRUCTURES", "min_grade": "C" },
+              "CSC 2262",
+              { "code": "CSC 2610", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "3000 Level",
+            "courses": [
+              { "code": "CSC 3102", "min_grade": "C" },
+              { "code": "CSC 3200", "min_grade": "C" },
+              { "code": "CSC 3380", "min_grade": "C" },
+              "COMPUTER_ORG"
+            ]
+          },
+          {
+            "category": "4000 Level",
+            "courses": [
+              { "code": "CSC 4101", "min_grade": "C" },
+              { "code": "CSC 4103", "min_grade": "C" },
+              { "code": "CSC 4330", "min_grade": "C" },
+              "CSC 4402",
+              "CSC 4501",
+              "CSC 4610",
+              "CSC 4562"
+            ]
+          },
+          {
+            "category": "CSC Electives",
+            "courses": [
+              "CSC 2000+"
+            ]
+          },
+          {
+            "category": "Area Elective",
+            "courses": [
+              "CSC 3304", "CSC 4362", "CSC 4444", "CSC 4512", "CSC 4585",
+              "CSC 4762", "EE 4625", "EE 4660", "IE 4426", "ISDS 4120",
+              "ISDS 4123", "MATH 4023", "MATH 4025", "MATH 4171",
+              "MATH 4172", "MATH 4325"
+            ],
+            "notes": "3 hours required from the approved CCN list."
+          },
+          { "category": "Group A", "courses": ["GROUP_A_ELECTIVES"] },
+          { "category": "Group A or Group B", "courses": ["GROUP_A_ELECTIVES", "GROUP_B_ELECTIVES"] }
+        ]
+      },
+      "Second Discipline": {
+        "total_required_credit_hours": 120,
+        "requirements": [
+          {
+            "category": "English Composition",
+            "courses": [
+              { "code": "ENGL 1001", "min_grade": "C" },
+              { "code": "ENGL 2000", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "Mathematics & Statistics",
+            "courses": [
+              { "code": "CALCULUS_1", "min_grade": "C" },
+              { "code": "CALCULUS_2", "min_grade": "C" },
+              "MATH 2090",
+              "STATISTICS"
+            ]
+          },
+          {
+            "category": "Lower Level Courses",
+            "courses": [
+              { "code": "CSC 1350", "min_grade": "C" },
+              { "code": "CSC 1351", "min_grade": "C" },
+              { "code": "DISCRETE_STRUCTURES", "min_grade": "C" },
+              "CSC 2262"
+            ]
+          },
+          {
+            "category": "3000 Level",
+            "courses": [
+              { "code": "CSC 3102", "min_grade": "C" },
+              { "code": "CSC 3200", "min_grade": "C" },
+              { "code": "CSC 3380", "min_grade": "C" },
+              "COMPUTER_ORG"
+            ]
+          },
+          {
+            "category": "4000 Level",
+            "courses": [
+              { "code": "CSC 4101", "min_grade": "C" },
+              { "code": "CSC 4103", "min_grade": "C" },
+              { "code": "CSC 4330", "min_grade": "C" },
+              "CSC 4402"
+            ]
+          },
+          {
+            "category": "CSC Electives",
+            "courses": [
+              "CSC 2000+",
+              "CSC 2000+",
+              "CSC 3000+",
+              "CSC 4000+"
+            ]
+          },
+          {
+            "category": "Area Elective",
+            "courses": [
+              "SD Area Elective",
+              "SD Area Elective",
+              "SD Area Elective",
+              "SD Area Elective",
+              "SD Area Elective"
+            ],
+            "notes": "15 hours total. Requires a coherent sequence from a single department outside CSC. Ordinarily includes at least two courses at 3000+ level."
+          },
+          { "category": "Group A", "courses": ["GROUP_A_ELECTIVES"] },
+          { "category": "Group A or Group B", "courses": ["GROUP_A_ELECTIVES", "GROUP_B_ELECTIVES"] }
+        ]
+      },
+      "Cybersecurity": {
+        "total_required_credit_hours": 120,
+        "requirements": [
+          {
+            "category": "English Composition",
+            "courses": [
+              { "code": "ENGL 1001", "min_grade": "C" },
+              { "code": "ENGL 2000", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "Mathematics & Statistics",
+            "courses": [
+              { "code": "CALCULUS_1", "min_grade": "C" },
+              { "code": "CALCULUS_2", "min_grade": "C" },
+              "MATH 2090",
+              "STATISTICS"
+            ]
+          },
+          {
+            "category": "Lower Level Courses",
+            "courses": [
+              { "code": "CSC 1350", "min_grade": "C" },
+              { "code": "CSC 1351", "min_grade": "C" },
+              { "code": "DISCRETE_STRUCTURES", "min_grade": "C" },
+              "CSC 2262",
+              "CSC 2362"
+            ]
+          },
+          {
+            "category": "3000 Level",
+            "courses": [
+              { "code": "CSC 3102", "min_grade": "C" },
+              { "code": "CSC 3200", "min_grade": "C" },
+              "CSC 3304",
+              { "code": "CSC 3380", "min_grade": "C" },
+              "COMPUTER_ORG"
+            ]
+          },
+          {
+            "category": "4000 Level",
+            "courses": [
+              { "code": "CSC 4101", "min_grade": "C" },
+              { "code": "CSC 4103", "min_grade": "C" },
+              { "code": "CSC 4330", "min_grade": "C" },
+              "CSC 4360",
+              "CSC 4362",
+              "CSC 4402",
+              "CSC 4501",
+              "CSC 4562"
+            ]
+          },
+          {
+            "category": "Area Elective",
+            "courses": [
+              "CSC 3730", "CSC 4243", "CSC 4444", "CSC 4610",
+              "CSC 4762", "IE 4462", "IE 4466"
+            ],
+            "notes": "3 hours required from the approved CYB list."
+          },
+          { "category": "Group A", "courses": ["GROUP_A_ELECTIVES"] },
+          { "category": "Group A or Group B", "courses": ["GROUP_A_ELECTIVES", "GROUP_B_ELECTIVES"] }
+        ]
+      },
+      "Data Science and Analytics": {
+        "total_required_credit_hours": 120,
+        "requirements": [
+          {
+            "category": "English Composition",
+            "courses": [
+              { "code": "ENGL 1001", "min_grade": "C" },
+              { "code": "ENGL 2000", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "Mathematics & Statistics",
+            "courses": [
+              { "code": "CALCULUS_1", "min_grade": "C" },
+              { "code": "CALCULUS_2", "min_grade": "C" },
+              "MATH 2090",
+              "STATISTICS"
+            ]
+          },
+          {
+            "category": "Lower Level Courses",
+            "courses": [
+              { "code": "CSC 1350", "min_grade": "C" },
+              { "code": "CSC 1351", "min_grade": "C" },
+              { "code": "DISCRETE_STRUCTURES", "min_grade": "C" },
+              "CSC 2262",
+              { "code": "CSC 2730", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "3000 Level",
+            "courses": [
+              { "code": "CSC 3102", "min_grade": "C" },
+              { "code": "CSC 3200", "min_grade": "C" },
+              { "code": "CSC 3380", "min_grade": "C" },
+              "COMPUTER_ORG",
+              "CSC 3730"
+            ]
+          },
+          {
+            "category": "4000 Level",
+            "courses": [
+              { "code": "CSC 4101", "min_grade": "C" },
+              { "code": "CSC 4103", "min_grade": "C" },
+              { "code": "CSC 4330", "min_grade": "C" },
+              "CSC 4402",
+              "CSC 4740",
+              "CSC 4343"
+            ]
+          },
+          {
+            "category": "CSC Electives",
+            "courses": [
+              "CSC 2000+",
+              "CSC 4000+"
+            ]
+          },
+          {
+            "category": "Area Elective",
+            "courses": [
+              "CSC 4444", "CSC 4501", "CSC 4512", "CSC 4610", "CSC 4762",
+              "ISDS 3105", "ISDS 4118", "ISDS 4141",
+              "MATH 4024", "MATH 4025",
+              "CSC 4000+"
+            ],
+            "notes": "6 hours total. 3 hours must be from the specific list; 3 hours must be any CSC 4000+ level course."
+          },
+          { "category": "Group A", "courses": ["GROUP_A_ELECTIVES"] },
+          { "category": "Group A or Group B", "courses": ["GROUP_A_ELECTIVES", "GROUP_B_ELECTIVES"] }
+        ]
+      },
+      "Software Engineering": {
+        "total_required_credit_hours": 120,
+        "requirements": [
+          {
+            "category": "English Composition",
+            "courses": [
+              { "code": "ENGL 1001", "min_grade": "C" },
+              { "code": "ENGL 2000", "min_grade": "C" }
+            ]
+          },
+          {
+            "category": "Mathematics & Statistics",
+            "courses": [
+              { "code": "CALCULUS_1", "min_grade": "C" },
+              { "code": "CALCULUS_2", "min_grade": "C" },
+              "MATH 2090",
+              "STATISTICS"
+            ]
+          },
+          {
+            "category": "Lower Level Courses",
+            "courses": [
+              { "code": "CSC 1350", "min_grade": "C" },
+              { "code": "CSC 1351", "min_grade": "C" },
+              { "code": "DISCRETE_STRUCTURES", "min_grade": "C" },
+              "CSC 2262"
+            ]
+          },
+          {
+            "category": "3000 Level",
+            "courses": [
+              { "code": "CSC 3102", "min_grade": "C" },
+              { "code": "CSC 3200", "min_grade": "C" },
+              "CSC 3304",
+              { "code": "CSC 3380", "min_grade": "C" },
+              "COMPUTER_ORG"
+            ]
+          },
+          {
+            "category": "4000 Level",
+            "courses": [
+              { "code": "CSC 4101", "min_grade": "C" },
+              { "code": "CSC 4103", "min_grade": "C" },
+              { "code": "CSC 4330", "min_grade": "C" },
+              "CSC 4332",
+              "CSC 4351",
+              "CSC 4402"
+            ]
+          },
+          {
+            "category": "CSC Electives",
+            "courses": [
+              "CSC 2000+",
+              "CSC 2000+"
+            ],
+            "notes": "At least one must be CSC 2000-level or above."
+          },
+          {
+            "category": "Area Elective",
+            "courses": [
+              "CSC 4243", "CSC 4263", "CSC 4304", "CSC 4356", "CSC 4357",
+              "CSC 4360", "CSC 4362", "CSC 4370", "CSC 4444", "CSC 4501",
+              "CSC 4562", "CSC 4585", "CSC 4610", "CSC 4740", "CSC 4762",
+              "CSC 4890", "EE 4859", "IE 4461", "ISDS 4111", "ISDS 4112",
+              "ISDS 4113", "ISDS 4120", "ISDS 4125", "ISDS 4141"
+            ],
+            "notes": "6 hours total required from the approved SEG list."
+          },
+          { "category": "Group A", "courses": ["GROUP_A_ELECTIVES"] },
+          { "category": "Group A or Group B", "courses": ["GROUP_A_ELECTIVES", "GROUP_B_ELECTIVES"] }
+        ]
+      }
+    }
+  }
+}

@@ -1,21 +1,22 @@
 // content.js
 
-function scrapeData() {
-    console.log("Starting scrape...");
-    
-    // NOTE: You will need to inspect the Workday page to find 
-    // the exact CSS classes for course names and grades.
-    const courseSelectors = document.querySelectorAll('.wd-course-class-name'); 
-    
-    let coursesTaken = [];
-    
-    courseSelectors.forEach(element => {
-        coursesTaken.push(element.innerText.trim());
-    });
-
-    console.log("Courses Found:", coursesTaken);
-    return coursesTaken;
+function clickExcelButton() {
+  const btn = document.querySelector('[data-automation-id="excelIconButton"]');
+  if (btn) {
+    btn.click();
+  } else {
+    console.warn('Excel button not found on page');
+  }
 }
 
-// Run the scrape after a short delay to let the page load
-setTimeout(scrapeData, 3000);
+// Listen for a trigger from the popup or background to click the button
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.type === 'CLICK_EXCEL') {
+    clickExcelButton();
+  }
+
+  if (message.type === 'EXCEL_DATA') {
+    console.log('Got parsed Excel data:', message.data);
+    // TODO: use message.data however you need (render table, process rows, etc.)
+  }
+});
