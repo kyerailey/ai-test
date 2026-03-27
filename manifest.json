@@ -1,5 +1,5 @@
 {
-    "name": "Senior Checkout Simplifier",
+    "name": "Kye Changes",
     "version": "1.0",
     "permissions": ["scripting", "activeTab", "downloads"],
     "manifest_version": 3,
